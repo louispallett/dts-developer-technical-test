@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 
 import TaskCard from "./TaskCard";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function AllTasks() {
     const [loading, setLoading] = useState(true);
     const [allTasks, setAllTasks] = useState([]);
@@ -11,7 +13,7 @@ export default function AllTasks() {
 
     useEffect(() => {
         const getAllTasks = () => {
-            axios.get("/api/task/get-all")
+            axios.get(`${apiUrl}/task/get-all`)
                 .then((response) => {
                     setAllTasks(response.data.allTasks);
                     setTasks(response.data.allTasks);

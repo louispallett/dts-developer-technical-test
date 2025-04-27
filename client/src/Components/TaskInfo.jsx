@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 
 import { ArrowLongRightIcon } from "@heroicons/react/16/solid";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const statusMap = {
     1: "Under Review",
     2: "Active",
@@ -26,8 +28,8 @@ export default function TaskInfo() {
 
 
     useEffect(() => {
-        axios.get("/api/task/get", {
-            headers: { taskId }
+        axios.get(`${apiUrl}/task/get`, {
+            params: { taskId }
         }).then((response) => {
             setData(response.data.task[0]);
         }).catch((err) => {
@@ -40,7 +42,7 @@ export default function TaskInfo() {
 
     const onSubmit = async () => {
         setIsPending(true);
-        axios.put("/api/task/update-status", {
+        axios.put(`${apiUrl}/task/update-status`, {
             taskId,
             status: data.status
         }).then((response) => {

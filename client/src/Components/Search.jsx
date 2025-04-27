@@ -5,6 +5,8 @@ import { MagnifyingGlassIcon } from "@heroicons/react/16/solid";
 
 import TaskCard from "./TaskCard";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function Search() {
     const form = useForm();
     const { register, control, handleSubmit, formState, watch, reset, setValue, trigger } = form;
@@ -15,7 +17,7 @@ export default function Search() {
 
     const onSubmit = async (data) => {
         setLoading(true);
-        axios.get("/api/task/get", {
+        axios.get(`${apiUrl}/task/get`, {
             headers: { taskId: data.taskId }
         })
             .then((response) => {

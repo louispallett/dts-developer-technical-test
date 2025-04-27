@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 
 import { ChevronDownIcon } from "@heroicons/react/16/solid";
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export default function Create({ setTasks }) {
     const form = useForm();
     const { register, control, handleSubmit, formState, watch, reset, setValue, trigger } = form;
@@ -14,7 +16,7 @@ export default function Create({ setTasks }) {
 
     const onSubmit = async (data) => {
         setIsPending(true);
-        axios.post("/api/task/create", data)
+        axios.post(`${apiUrl}/task/create`, data)
             .then((response) => {
                 setIsSuccess(true);
             }).catch((err) => {
