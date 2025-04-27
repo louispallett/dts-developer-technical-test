@@ -18,6 +18,8 @@
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@uidotdev/usehooks": "^2.4.1",
+    "@headlessui/react": "^1.7.19",
+    "@heroicons/react": "^2.1.4",
     "axios": "^1.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

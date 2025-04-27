@@ -98,6 +98,11 @@ exports.updateStatus = [
                 const error = new Error(`Database failed to fetch task ${req.body.taskId}`);
                 throw error;
             }
+
+            await Task.updateOne(
+                { _id: req.body.taskId },
+                { status: req.body.status }
+            )
         } catch (err) {
             console.log(err);
             res.status(err.statusCode || 500).json({
