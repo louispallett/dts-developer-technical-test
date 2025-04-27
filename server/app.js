@@ -23,8 +23,8 @@ const app = express();
 
 app.use((req, res, next) => {
     const allowedOrigin = process.env.NODE_ENV === 'production' 
-        ? 'https://dts-technical-lnp.netlify.app' 
-        : 'http://localhost:3001'; // or whatever your dev URL is
+        ? 'https://dts-technical-lnp.netlify.app/' 
+        : 'http://localhost:3001';
     res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
     res.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET");
     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
