@@ -1,3 +1,5 @@
+Dockerfile
+fly.toml
 package-lock.json
 
 # Logs
