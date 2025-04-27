@@ -21,27 +21,30 @@ const limiter = RateLimit({
 
 const app = express();
 
-// app.use((req, res, next) => {
-//     res.setHeader("Access-Control-Allow-Origin", "*");
-//     res.setHeader("Access-Control-Allow-Methods", "POST, GET");
-//     res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
-//     next();
-// });
+app.use((req, res, next) => {
+    const allowedOrigin = process.env.NODE_ENV === 'production' 
+        ? 'https://dts-technical-lnp.netlify.app' 
+        : 'http://localhost:3001'; // or whatever your dev URL is
+    res.setHeader("Access-Control-Allow-Origin", allowedOrigin);
+    res.setHeader("Access-Control-Allow-Methods", "POST, PUT, GET");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+    next();
+});
 
 app.use(compression());
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.urlencoded({ extended: false }));
-// app.use(
-//     helmet.contentSecurityPolicy({
-//         directives: {
-//             "default-src": ["'self'", "'https://lowpal-tennis-server.fly.dev/favicon.ico'"],
-//             "script-src": ["'self'", "'unsafe-inline'"], // Removed cloudinary here - may use it later
-//             "img-src": ["'self'", "https://lowpal-tennis-server.fly.dev/favicon.ico"] // Removed cloudinary here - may use it later
-//         },
-//     }),
-// );
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            "default-src": ["'self'", "'https://dts-developer-test.fly.dev/favicon.ico'"],
+            "script-src": ["'self'", "'unsafe-inline'"], 
+            "img-src": ["'self'", "https://dts-developer-test.fly.dev/favicon.ico"] 
+        },
+    }),
+);
 app.use(logger('dev'));
 app.use(limiter);
 app.use(session({
