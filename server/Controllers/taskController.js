@@ -24,8 +24,8 @@ exports.getAllTasks = asyncHandler(async (req, res, next) => {
 
 exports.getTask = asyncHandler(async (req, res, next) => {
     try {
-        console.log(req.headers.taskid);
-        const task = await Task.find({ _id: req.headers.taskid });
+        const { taskId } = req.query;
+        const task = await Task.find({ _id: taskId });
 
         if (!task) {
             const error = new Error("Database failed to fetch task");
