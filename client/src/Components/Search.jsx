@@ -18,7 +18,7 @@ export default function Search() {
     const onSubmit = async (data) => {
         setLoading(true);
         axios.get(`${apiUrl}/task/get`, {
-            headers: { taskId: data.taskId }
+            params: { taskId: data.taskId }
         })
             .then((response) => {
                 console.log(response.data)
