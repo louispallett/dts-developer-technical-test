@@ -72,39 +72,29 @@ function Filter({ changeFilter, activeFilter }) {
             <div className="flex flex-col md:flex-row">
                 <button
                     onClick={() => changeFilter(null)}
-                    className={activeFilter === null ? "bg-indigo-200 px-1.5" : "px-1.5"}
+                    className={activeFilter === null ? "bg-indigo-200 px-1.5" : "px-1.5 hover:bg-indigo-100"}
                 >
                     None
                 </button>
                 <button
                     onClick={() => changeFilter(1)}
-                    className={activeFilter === 1 ? "bg-indigo-200 px-1.5" : "px-1.5"}
+                    className={activeFilter === 1 ? "bg-indigo-200 px-1.5" : "px-1.5 hover:bg-indigo-100"}
                 >
                     Under Review
                 </button>
                 <button
                     onClick={() => changeFilter(2)}
-                    className={activeFilter === 2 ? "bg-indigo-200 px-1.5" : "px-1.5"}
+                    className={activeFilter === 2 ? "bg-indigo-200 px-1.5" : "px-1.5 hover:bg-indigo-100"}
                 >
                     Active
                 </button>
                 <button
                     onClick={() => changeFilter(3)}
-                    className={activeFilter === 3 ? "bg-indigo-200 px-1.5" : "px-1.5"}
+                    className={activeFilter === 3 ? "bg-indigo-200 px-1.5" : "px-1.5 hover:bg-indigo-100"}
                 >
                     Closed
                 </button>
             </div>
-        </div>
-    )
-}
-
-function SortBy() {
-    return (
-        <div className="standard-container !p-0 self-start">
-            <nav className="menu-wrapper">
-
-            </nav>
         </div>
     )
 }
