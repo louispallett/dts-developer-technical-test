@@ -20,7 +20,8 @@ export default function Create({ setTasks }) {
             .then((response) => {
                 setIsSuccess(true);
             }).catch((err) => {
-                setServerError(err);
+                console.log(err.message);
+                setServerError(err.message);
             }).finally(() => {
                 setIsPending(false);
             })
@@ -90,6 +91,9 @@ export default function Create({ setTasks }) {
                                 >
                                     Save and Submit
                                 </button>
+                            )}
+                            { serverError && (
+                                <p className="font-bold text-red-600">{serverError}</p>
                             )}
                         </>
                     )}

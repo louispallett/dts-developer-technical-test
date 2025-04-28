@@ -32,8 +32,8 @@ export default function TaskInfo() {
         }).then((response) => {
             setData(response.data.task[0]);
         }).catch((err) => {
-            console.log(err);
-            setError(err);
+            console.log(err.message);
+            setError(err.message);
         }).finally(() => {
             setLoading(false);
         })
@@ -45,17 +45,20 @@ export default function TaskInfo() {
             taskId,
             status: data.status
         }).then((response) => {
-            setIsPending(false);
-            console.log(response);
+
         }).catch((err) => {
-            setServerError(err);
+            setServerError(err.message);
         }).finally(() => {
+            setIsPending(false);
         })
     }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <div className="standard-container my-2.5">
+                { error && (
+                    <p className="font-bold text-red-600 my-2.5">{error}</p>
+                )}
                 { loading && (
                     <div className="flex justify-center items-center my-10">
                         <svg viewBox="25 25 50 50">
@@ -105,8 +108,8 @@ export default function TaskInfo() {
                         </div>
                     </>
                 )}
-                { error && (
-                    <></>
+                { serverError && (
+                    <p className="font-bold text-red-600 my-2.5">{serverError}</p>
                 )}
             </div>
             { data && (
@@ -129,31 +132,37 @@ export default function TaskInfo() {
 
 function Delete({ taskId }) {
     const [isPending, setIsPending] = useState(false);
+    const [serverError, setServerError] = useState(null);
 
     const handleDeletion = async () => {
         setIsPending(true);
         axios.post(`${apiUrl}/task/delete`, { 
             taskId 
         }).then((response) => {
-            console.log(response);
+            window.location.assign("/");
         }).catch((err) => {
-            console.log(err);
+            console.log(err.message);
+            setServerError(err.message)
         }).finally(() => {
             setIsPending(false);
-            window.location.assign("/");
         })
     }
 
     return (
-        <button className="danger flex justify-center"
-            type="button"
-            onClick={handleDeletion}
-        >
-            { isPending ? (
-                <div className="spinner h-6 w-6"></div>
-            ) : (
-                <>Delete Task</>
+        <>
+            <button className="danger flex justify-center"
+                type="button"
+                onClick={handleDeletion}
+            >
+                { isPending ? (
+                    <div className="spinner h-6 w-6"></div>
+                ) : (
+                    <>Delete Task</>
+                )}
+            </button>
+            { serverError && (
+                <p className="font-bold text-red-600 my-2.5">{serverError}</p>
             )}
-        </button>
+        </>
     )
 }

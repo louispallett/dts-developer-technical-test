@@ -25,7 +25,7 @@ export default function Search() {
                 setTasks(response.data.task);
             }).catch((err) => {
                 setTasks([]);
-                setServerError(err);
+                setServerError(err.message);
             }).finally(() => {
                 setLoading(false);
             })
@@ -64,11 +64,16 @@ export default function Search() {
                                     <TaskCard data={tasks[0]} />
                                 ) : (
                                     <div className="standard-container my-2.5">
-                                        <p className="text-center my-5">No tasks found</p>
+                                        { serverError ? (
+                                            <p className="font-bold text-red-600">{serverError}</p>
+                                        ) : (
+                                            <p className="text-center my-5">No tasks found</p>
+                                        )}
+                                    
                                     </div>
                                 )}
                             </>
-                        )}                    
+                        )}       
                     </>
                 )}
         </>

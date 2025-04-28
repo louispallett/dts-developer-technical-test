@@ -9,6 +9,7 @@ export default function AllTasks() {
     const [loading, setLoading] = useState(true);
     const [allTasks, setAllTasks] = useState([]);
     const [tasks, setTasks] = useState([]);
+    const [serverError, setServerError] = useState(null);
     const [activeFilter, setActiveFilter] = useState(null);
 
     useEffect(() => {
@@ -19,6 +20,7 @@ export default function AllTasks() {
                     setTasks(response.data.allTasks);
                 }).catch((err) => {
                     console.log(err);
+                    setServerError(err.message);
                 }).finally(() => {
                     setLoading(false);
                 })
@@ -50,7 +52,11 @@ export default function AllTasks() {
                     <Filter changeFilter={changeFilter} activeFilter={activeFilter} />
                     { tasks.length < 1 ? (
                         <div className="standard-container text-xl my-2.5 flex gap-2.5 justify-between">
-                            <p>No tasks</p>
+                            { serverError ? (
+                                <p className="font-bold text-red-600">{serverError}</p>
+                            ) : (
+                                <p>No Tasks</p>
+                            )}
                         </div>
                     ) : (
                         <>
