@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
 
 const Task = require("../models/task");
+const replaceEncodedChars = require("../config/replaceEncodedChars.js");
 
 exports.getAllTasks = asyncHandler(async (req, res, next) => {
     try {
@@ -10,6 +11,11 @@ exports.getAllTasks = asyncHandler(async (req, res, next) => {
         if (!allTasks) {
             const error = new Error("Database failed to fetch tasks");
             throw error;
+        }
+
+        for (let task of allTasks) {
+            task.title = replaceEncodedChars(task.title);
+            if (task.description) task.description = replaceEncodedChars(task.description);
         }
 
         res.json({ allTasks });
@@ -32,6 +38,9 @@ exports.getTask = asyncHandler(async (req, res, next) => {
             error.statusCode = 404;
             throw error;
         }
+
+        task[0].title = replaceEncodedChars(task[0].title);
+        if (task[0].description) task[0].description = replaceEncodedChars(task[0].description);
 
         res.json({ task });
     } catch (err) {
