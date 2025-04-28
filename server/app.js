@@ -49,7 +49,6 @@ app.use(function (err, req, res, next) {
     next(err);
 });
 
-
 app.use(compression());
 app.use(cookieParser());
 app.use(express.json({ limit: '10kb' })); 
@@ -100,7 +99,7 @@ app.use((err, req, res, next) => {
 });
 
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 const HOST = '0.0.0.0';
 
 app.listen(PORT, HOST, () => {
