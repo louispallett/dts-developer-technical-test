@@ -23,7 +23,6 @@ export default function TaskInfo() {
     const { register, control, handleSubmit, formState, watch, reset, setValue, trigger } = form;
     const { errors } = formState;
     const [isPending, setIsPending] = useState(false);
-    const [success, setIsSuccess] = useState(false);
     const [serverError, setServerError] = useState(null);
 
 
@@ -46,12 +45,11 @@ export default function TaskInfo() {
             taskId,
             status: data.status
         }).then((response) => {
+            setIsPending(false);
             console.log(response);
-            setIsSuccess(true);
         }).catch((err) => {
             setServerError(err);
         }).finally(() => {
-            setIsPending(false);
         })
     }
 
@@ -67,7 +65,7 @@ export default function TaskInfo() {
                 )}
                 { data && (
                     <>
-                        <div className="flex justify-between items-end">
+                        <div className="flex flex-col md:flex-row justify-between md:items-end">
                             <h4>{data.title}</h4>
                             <p className="text-slate-500">{data._id}</p>
                         </div>
@@ -77,7 +75,7 @@ export default function TaskInfo() {
                             ) : (
                                 <p className="text-slate-600 my-2.5"><i>Description left intentionally blank.</i></p>
                             )}
-                            <div className="flex gap-2.5 justify-between">
+                            <div className="flex flex-col md:flex-row gap-2.5 justify-between">
                                 <p className={data.status === 1 ? "status open" : "status"}>Under Review</p>
                                 <ArrowLongRightIcon className="w-4" />
                                 <p className={data.status === 2 ? "status open" : "status"}>Active</p>
@@ -112,10 +110,50 @@ export default function TaskInfo() {
                 )}
             </div>
             { data && (
-                <button className="success"
-                    type="submit"
-                >Save</button>
+                <div className="flex flex-col md:flex-row gap-2.5">
+                    <button className="success flex justify-center"
+                        type="submit"
+                    >
+                        { isPending ? (
+                            <div className="spinner h-6 w-6"></div>
+                        ) : (
+                            <>Save</>
+                        )}
+                    </button>
+                    <Delete taskId={data._id}/>
+                </div>
             )}
         </form>
+    )
+}
+
+function Delete({ taskId }) {
+    const [isPending, setIsPending] = useState(false);
+
+    const handleDeletion = async () => {
+        setIsPending(true);
+        axios.post(`${apiUrl}/task/delete`, { 
+            taskId 
+        }).then((response) => {
+            console.log(response);
+        }).catch((err) => {
+            console.log(err);
+        }).finally(() => {
+            setIsPending(false);
+            window.location.assign("/");
+        })
+    }
+
+    return (
+        <button className="danger flex justify-center"
+            type="button"
+            onClick={handleDeletion}
+        >
+            { isPending ? (
+                <div className="spinner h-6 w-6"></div>
+            ) : (
+                <>Delete Task</>
+            )}
+        </button>
     )
 }
