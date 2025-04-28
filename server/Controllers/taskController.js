@@ -103,6 +103,8 @@ exports.updateStatus = [
                 { _id: req.body.taskId },
                 { status: req.body.status }
             )
+
+            res.sendStatus(200);
         } catch (err) {
             console.log(err);
             res.status(err.statusCode || 500).json({
@@ -123,6 +125,7 @@ exports.deleteTask = asyncHandler(async (req, res, next) => {
 
         await Task.findByIdAndDelete(req.body.taskId);
 
+        res.sendStatus(200);
     } catch (err) {
         console.log(err);
         res.status(err.statusCode || 500).json({
