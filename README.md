@@ -1,4 +1,7 @@
 # dts-developer-technical-test
+
+![Server Tests](https://github.com/louispallett/dts-developer-technical-test/actions/workflows/server-tests.yml/badge.svg)
+
 DTS Developer Technical Test for Junior Software Developer role for HM C&amp;TS.
 
 ### [Live link to the client page](https://dts-technical-lnp.netlify.app/)
